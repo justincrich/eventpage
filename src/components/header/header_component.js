@@ -22,14 +22,7 @@ export default function Header(props){
                 }
             </div>
             <h5 className='header_title'>myCareer</h5>
-            {props.search.open?
-                <i 
-                    className="material-icons header_search_icon"
-                    onClick={props.search.toggle}
-                
-                >close</i>
-                :
-                <div className='header_action_bar'>
+            <div className='header_action_bar'>
                     <i className="material-icons hidden-sm-down"
                     >notifications</i>
                     <i className="material-icons hidden-sm-down"
@@ -39,8 +32,7 @@ export default function Header(props){
                         onClick={props.search.toggle}
                     >search</i>
                     <i className="material-icons hidden-sm-down">account_circle</i>
-                </div>
-            }
+            </div>
             {props.menu.open &&
                 <Menu/>
             }

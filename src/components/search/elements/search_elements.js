@@ -1,71 +1,36 @@
 import React, { Component } from 'react';
 
-export default class SearchElements extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            employer_name:'',
-            date:null,
-            location:'',
-            filtersViewable:false,
-            bodyClass:'search_body',
-            has_catering:null,
-            student_group:'',
-            event_type:'',
-            source:'',
-            account_manager:'',
-            room:'',
-            format:'',
-            status:'',
-            reception:null,
-            job_position:'',
-            notes:'',
-            industry:'',
-            posted_date:null,
-            event_reception_location:'',
-            // sections:{
-            //     employer_name_visible:true,
-            //     event_date_visible:true
-            // }
-
-        }
-        this.reset = this.reset.bind(this);
-    }
-    reset(){
-        this.setState({
-            ...this.state,
-            employer_name:'',
-            date:new Date(),
-            location:'',
-            has_catering:null,
-            student_group:'',
-            event_type:'',
-            source:'',
-            account_manager:'',
-            room:'',
-            format:'',
-            status:'',
-            reception:null,
-            job_position:'',
-            notes:'',
-            industry:'',
-            posted_date:new Date(),
-            event_reception_location:'',
-        })
-    }
-    render(){
+export default function SearchElements(props){
         return(
-            <div>
-                <div className="search_field_container">
-                    <div className='search_field_boxes'>
-                        <label for="employer_name">Employer Name</label>
+            <form className='search_elements_form'>
+                    <div className='search_field_boxes search_event_name_container'>
+                        <label for="event_name">Event Name</label>
                         <input 
-                            id='employer_name' 
+                            id='event_name' 
                             className='form-control' 
-                            value={this.state.employer_name}
+                            value={props.fields.event_name}
                             onChange={(e)=>{
-                                this.setState({
-                                employer_name: e.target.value
+                                props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        event_name: e.target.value
+                                    }
+                                });
+                            }}
+                        />
+                    </div>
+                    <div className='search_field_boxes'>
+                        <label for="company">Employer Name</label>
+                        <input 
+                            id='company' 
+                            className='form-control' 
+                            value={props.fields.company}
+                            onChange={(e)=>{
+                                props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        company: e.target.value
+                                    }
                                 });
                             }}
                         />
@@ -76,16 +41,21 @@ export default class SearchElements extends Component{
                                 type='date' 
                                 className='form-control' 
                                 placeholder="Dates"
-                                value={this.state.date}
+                                value={props.fields.date}
                                 onChange={(e)=>{
-                                    this.setState({
-                                    date: e.target.value
+                                    props.fields.setFields({
+                                        
+                                        fields:{
+                                            ...props.fields,
+                                            date: e.target.value
+                                        }
+                                        
                                     });
                                 }}
                         />
                     </div>
-                </div>
-                <div className="search_filter_form">
+                
+
                         <div className="container_status form_item">
                             <label for="status">Event Status</label>
                             <div className="status" id="status">
@@ -95,8 +65,13 @@ export default class SearchElements extends Component{
                                         name="status_open" 
                                         id="status_open" 
                                         value="Registration Open"
-                                        checked={this.state.status==='Registration Open'}
-                                        onChange={(e)=>{this.setState({status:e.target.value})}}
+                                        checked={props.fields.status==='Registration Open'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                status: e.target.value
+                                            }
+                                            })}}
                                     />
                                     <span>Registration Open</span>
                                 </div>
@@ -106,8 +81,13 @@ export default class SearchElements extends Component{
                                         name="status_closed" 
                                         id="status_closed" 
                                         value="Registration Closed"
-                                        checked={this.state.status==='Registration Closed'}
-                                        onChange={(e)=>{this.setState({status:e.target.value})}}
+                                        checked={props.fields.status==='Registration Closed'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                status: e.target.value
+                                            }
+                                        })}}
                                     />
                                     <span>Registration Closed</span>
                                 </div>
@@ -118,8 +98,13 @@ export default class SearchElements extends Component{
                             <select 
                                 className="form-control job_position" 
                                 id="job_position"
-                                value={this.state.job_position}
-                                onChange={(e)=>this.setState({job_position:e.target.value})}
+                                value={props.fields.job_position}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        job_position: e.target.value
+                                    }
+                                })}
                             >
                                 <option value='Developer'>Developer</option>
                                 <option value='Teacher'>Teacher</option>
@@ -133,8 +118,13 @@ export default class SearchElements extends Component{
                             <select 
                                 className="form-control student_group" 
                                 id="student_group"
-                                value={this.state.student_group}
-                                onChange={(e)=>this.setState({student_group:e.target.value})}
+                                value={props.fields.student_group}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        student_group: e.target.value
+                                    }
+                                    })}
                             >
                                 <option value='Accounting Club'>Accounting Club</option>
                                 <option value='IT Club'>IT Club</option>
@@ -148,8 +138,15 @@ export default class SearchElements extends Component{
                                 className="form-control event_type" 
                                 id="event_type" 
                                 name='event_type'
-                                value={this.state.event_type}
-                                onChange={(e)=>this.setState({event_type:e.target.value})}
+                                value={props.fields.event_type}
+                                onChange={(e)=>props.fields.setFields(
+                                    {
+                                        fields:{
+                                            ...props.fields,
+                                            event_type: e.target.value
+                                        }
+                                    }
+                                    )}
                             >
                                 <option value='Mock Interviews'>Mock Interviews</option>
                                 <option value='Career Workshops'>Career Workshops</option>
@@ -165,8 +162,13 @@ export default class SearchElements extends Component{
                                 className="form-control source" 
                                 id="source" 
                                 name='source'
-                                value={this.state.source}
-                                onChange={(e)=>this.setState({source:e.target.value})}
+                                value={props.fields.source}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        source: e.target.value
+                                    }
+                                    })}
                             >
                                 <option value='Gale Petr'>Gale Petr</option>
                                 <option value='North Lindmark'>North Lindmark</option>
@@ -184,8 +186,13 @@ export default class SearchElements extends Component{
                                         name="has_catering_yes" 
                                         id="has_catering_yes" 
                                         value="Yes"
-                                        checked={this.state.has_catering==='Yes'}
-                                        onChange={(e)=>{this.setState({has_catering:e.target.value})}}
+                                        checked={props.fields.has_catering==='Yes'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                has_catering: e.target.value
+                                            }
+                                            })}}
                                     />
                                     <span>Yes</span>
                                 </div>
@@ -195,8 +202,13 @@ export default class SearchElements extends Component{
                                         name="has_catering_no" 
                                         id="has_catering_no" 
                                         value="No"
-                                        checked={this.state.has_catering==='No'}
-                                        onChange={(e)=>{this.setState({has_catering:e.target.value})}}
+                                        checked={props.fields.has_catering==='No'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                has_catering: e.target.value
+                                            }
+                                        })}}
                                     />
                                     <span>No</span>
                                 </div>
@@ -211,8 +223,13 @@ export default class SearchElements extends Component{
                                         name="reception_yes" 
                                         id="reception_yes" 
                                         value="Yes"
-                                        checked={this.state.reception==='Yes'}
-                                        onChange={(e)=>{this.setState({reception:e.target.value})}}
+                                        checked={props.fields.reception==='Yes'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                reception: e.target.value
+                                            }
+                                        })}}
                                     />
                                     <span>Yes</span>
                                 </div>
@@ -222,8 +239,13 @@ export default class SearchElements extends Component{
                                         name="reception_no" 
                                         id="reception_no" 
                                         value="No"
-                                        checked={this.state.reception==='No'}
-                                        onChange={(e)=>{this.setState({reception:e.target.value})}}
+                                        checked={props.fields.reception==='No'}
+                                        onChange={(e)=>{props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                reception: e.target.value
+                                            }
+                                            })}}
                                     />
                                     <span>No</span>
                                 </div>
@@ -235,8 +257,13 @@ export default class SearchElements extends Component{
                                 className="form-control account_manager" 
                                 id="account_manager" 
                                 name='account_manager'
-                                value={this.state.account_manager}
-                                onChange={(e)=>this.setState({account_manager:e.target.value})}
+                                value={props.fields.account_manager}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        account_manager: e.target.value
+                                    }
+                                })}
                             >
                                 <option value='Perry Petr'>Perry Petr</option>
                                 <option value='Durant Lindmark'>Durant Lindmark</option>
@@ -252,8 +279,13 @@ export default class SearchElements extends Component{
                                 className="form-control room" 
                                 id="room" 
                                 name='room'
-                                value={this.state.room}
-                                onChange={(e)=>this.setState({room:e.target.value})}
+                                value={props.fields.room}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        room: e.target.value
+                                    }
+                                    })}
                             >
                                 <option value='Ballroom 1'>Ballroom 1</option>
                                 <option value='C138'>C138</option>
@@ -271,8 +303,13 @@ export default class SearchElements extends Component{
                                 className="form-control format" 
                                 id="format" 
                                 name='format'
-                                value={this.state.format}
-                                onChange={(e)=>this.setState({format:e.target.value})}
+                                value={props.fields.format}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        format: e.target.value
+                                    }
+                                })}
                             >
                                 <option value='On Site'>On Site</option>
                                 <option value='Online'>Online</option>
@@ -286,8 +323,13 @@ export default class SearchElements extends Component{
                                 className="form-control event_location" 
                                 id="event_location" 
                                 name='event_location'
-                                value={this.state.event_location}
-                                onChange={(e)=>this.setState({event_location:e.target.value})}
+                                value={props.fields.event_location}
+                                onChange={(e)=>props.fields.setFields({
+                                    fields:{
+                                        ...props.fields,
+                                        event_location: e.target.value
+                                    }
+                                })}
                             >
                                 <option value='Smith Hall'>Smith Hall</option>
                                 <option value='David Hall'>David Hall</option>
@@ -301,8 +343,11 @@ export default class SearchElements extends Component{
                                 className="form-control industry" 
                                 id="industry" 
                                 name='industry'
-                                value={this.state.industry}
-                                onChange={(e)=>this.setState({industry:e.target.value})}
+                                value={props.fields.industry}
+                                onChange={(e)=>props.fields.setFields({fields:{
+                                        ...props.fields,
+                                        industry: e.target.value
+                                    }})}
                             >
                                 <option value='Finance: Consumer Services'>Finance: Consumer Services</option>
                                 <option value='Business Services'>Business Services</option>
@@ -315,10 +360,13 @@ export default class SearchElements extends Component{
                             <input 
                                 id='notes' 
                                 className='form-control notes' 
-                                value={this.state.notes}
+                                value={props.fields.notes}
                                 onChange={(e)=>{
-                                    this.setState({
-                                    notes: e.target.value
+                                    props.fields.setFields({
+                                        fields:{
+                                            ...props.fields,
+                                            notes: e.target.value
+                                        }
                                     });
                                 }}
                             />
@@ -328,18 +376,21 @@ export default class SearchElements extends Component{
                             <input id='posted_date' 
                                     type='date' 
                                     className='form-control posted_date'
-                                    value={this.state.posted_date}
+                                    value={props.fields.posted_date}
                                     onChange={(e)=>{
-                                        this.setState({
-                                            posted_date: e.target.value
+                                        props.fields.setFields({
+                                            fields:{
+                                                ...props.fields,
+                                                posted_date: e.target.value
+                                            }
                                         });
                                     }}
                             />
                     </div>
                         
-                </div>
                 
-            </div>
+                
+            </form>
         );
-    }
+    
 }

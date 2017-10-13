@@ -24,10 +24,19 @@ export default function ActionContainer(props){
                         className="btn"
                         onClick={()=>evalEntry()}
                     >Search</button>
-                    <div className='action_lg_filter_container'>
+                    <div id='searchlg_body'className='action_lg_filter_container'
+                    
+                    >
+                        <div
+                        className='filter_btn'
+                        onClick={props.search.toggleActionFilter}
+                        >
                         <i className="material-icons action_container_filter_icon">filter_list</i>
                         <span>Filter</span>
-                        <SearchLG search={props.search}/>
+                        </div>
+                        {props.search.actionFilterActive&&
+                            <SearchLG search={props.search}/>
+                        }
                     </div>
                 </div>
                 <div className='button_box'>

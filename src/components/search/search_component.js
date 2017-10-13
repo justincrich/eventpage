@@ -6,57 +6,75 @@ import SearchElements from './elements/search_elements';
 export default class SearchSM extends Component{
     constructor(props){
         super(props);
+        this.setFields = this.setFields.bind(this);
         this.state={
-            employer_name:'',
-            date:null,
-            location:'',
-            bodyClass:'search_body',
-            has_catering:null,
-            student_group:'',
-            event_type:'',
-            event_source:'',
-            account_manager:'',
-            event_room:'',
-            event_format:'',
-            event_status:'',
-            event_has_reception:null,
-            target_job_position:'',
-            admin_notes:'',
-            industry:'',
-            posted_date:'',
-            event_reception_location:'',
+            fields:{
+                event_name:'',
+                company:'',
+                date:null,
+                location:'',
+                has_catering:null,
+                student_group:'',
+                event_type:'',
+                source:'',
+                account_manager:'',
+                room:'',
+                format:'',
+                status:'',
+                reception:null,
+                job_position:'',
+                notes:'',
+                industry:'',
+                posted_date:null,
+                event_reception_location:'',
+                setFields:this.setFields
+            }
+            // sections:{
+            //     employer_name_visible:true,
+            //     event_date_visible:true
+            // }
 
         }
         this.reset = this.reset.bind(this);
+        
+    }
+
+    setFields(field){
+        this.setState({
+            ...field
+        })
     }
 
     reset(){
         this.setState({
-            ...this.state,
-            employer_name:'',
-            date:new Date(),
-            location:'',
-            has_catering:null,
-            student_group:'',
-            event_type:'',
-            event_source:'',
-            account_manager:'',
-            event_room:'',
-            event_format:'',
-            event_status:'',
-            event_has_reception:null,
-            target_job_position:'',
-            admin_notes:'',
-            industry:'',
-            posted_date:new Date(),
-            event_reception_location:'',
+            fields:{
+                ...this.state.fields,
+                event_name:'',
+                company:'',
+                date:new Date(),
+                location:'',
+                has_catering:null,
+                student_group:'',
+                event_type:'',
+                source:'',
+                account_manager:'',
+                room:'',
+                format:'',
+                status:'',
+                reception:null,
+                job_position:'',
+                notes:'',
+                industry:'',
+                posted_date:new Date(),
+                event_reception_location:'',
+            }
         })
     }
 
     render(){
         
         return(
-            <form id='search' className='search_body'>
+            <form id='search' className='search_body hidden-md-up'>
             <div className='search_header'>
                 <i  className="material-icons"
                     onClick={this.props.search.toggle}
@@ -65,40 +83,17 @@ export default class SearchSM extends Component{
                       onClick={this.reset}  
                 >clear</span>
             </div>
-            <SearchElements/>
+            <SearchElements fields={this.state.fields}/>
             <div className='search_action_container'>
-                <button type="button" className="btn btn-primary">Search</button>
-                <div 
-                    className='search_action_container_filter'
-                    onClick={()=>{
-                        let bodyClass;
-                        if(this.state.filtersViewable){
-
-                            bodyClass='search_body';
-                        }else{
-                            bodyClass='search_filters_body';
-                        }
-                        let viewSize;
-                        if(this.state.filtersViewable){
-                            viewSize= 'auto';
-                        }else{
-                            viewSize= 'calc(100% - 140px)';
-                        }
-                        document.getElementById('search').style.height = viewSize;
-                        this.setState({
-                            filtersViewable:!this.state.filtersViewable,
-                            bodyClass:bodyClass,
-                            height:viewSize
-                        })
-                    }}
-                >
-                    {this.state.filtersViewable ?
-                        <i className="material-icons searc_filter_icon">close</i>
-                        :
-                        <i className="material-icons searc_filter_icon">filter_list</i>
-                    }
-                    <span>Filters</span>
-                </div>
+                <button type="button" 
+                        className="btn btn-primary"
+                        onClick={()=>{
+                                let params = this.state.fields;
+                                delete params['setFields'];
+                                this.props.search.query(params);
+                                this.props.search.toggle();
+                            }}
+                >Search</button>
             </div>
         </form>
         );

@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component , ReactDOM} from 'react';
 import Fuse from 'fuse.js';
 import Typekit from 'react-typekit';
 import Filter from './resources/filter';
 //Components
 import Header from './components/header/header_component';
 import SearchSM from './components/search/search_component';
+import SearchLG from './components/search/search_component_lg';
 import DataTable from './components/data_table/data_table';
 import ActionContainer from './components/action_container/action_container';
 class App extends Component {
@@ -15,6 +16,8 @@ class App extends Component {
     this.getData = this.getData.bind(this);
     this.setLGEventName=this.setLGEventName.bind(this);
     this.triggerQuery=this.triggerQuery.bind(this);
+    this.toggleActionFilter = this.toggleActionFilter.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       menu:{
         open:false,
@@ -22,10 +25,13 @@ class App extends Component {
       },
       search:{
         open:false,
+        actionFilterActive:false,
         toggle:this.toggleSearch,
+        toggleActionFilter:this.toggleActionFilter,
         lgEventName:'',
         setLGEventName:this.setLGEventName,
-        triggerQuery:this.triggerQuery
+        triggerQuery:this.triggerQuery,
+        query:this.getData
       },
 
     }
@@ -37,6 +43,10 @@ class App extends Component {
 
   componentWillMount(){
     this.getData();
+    document.addEventListener('click',this.handleClick,false);
+  }
+  componentWillUnmount(){
+    document.removeEventListener('click',this.handleClick,false);
   }
 
   triggerQuery(
@@ -49,7 +59,7 @@ class App extends Component {
 
   getData(query={}){
 
-    
+    console.log('query',query);
     
     fetch('./api/dataset.json')
       .then(data=>data.json())
@@ -84,10 +94,25 @@ class App extends Component {
       }
     });
   }
+  toggleActionFilter(){
+    this.setState({
+      search:{
+        ...this.state.search,
+        actionFilterActive:!this.state.search.actionFilterActive
+      }
+    })
+  }
+  handleClick(e){
+    
+    if(this.state.search.actionFilterActive && !document.getElementById('searchlg_body').contains(e.target)){
+      this.toggleActionFilter();
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <Typekit kitId="yvm7tvs" />
+        <Typekit kitId="yvm7tvs"/>
         <Header 
           menu={this.state.menu} 
           search={this.state.search}

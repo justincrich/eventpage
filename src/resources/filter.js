@@ -1,9 +1,11 @@
+import moment from 'moment';
 export default class Filter {
     constructor(arr){
         this.data = Object.values(arr);
     }
 
     query(params={}){
+        
         return new Promise((res,rej)=>{
             let keys = Object.keys(params);
             if(keys.length == 0){
@@ -64,19 +66,30 @@ export default class Filter {
                 let param = params[key];
                 let recVal = record[key];
                 let pass;
-                console.log('hiii',key)
-                if(key === 'event_name' || key=== 'admin_notes'){
-                    pass = similarity(param,recVal)>.40;
-                    console.log(pass)
+                if(param!='' && param != null){
 
-                }else{
-                    pass = param === recVal;
+                    if(key === 'event_name' || key=== 'admin_notes' || key === 'employer_name'){
+                        console.log(key,param,recVal)
+                        pass = similarity(param,recVal)>.40;
+                        console.log(pass)
+    
+                    
+                    }else if(key ==='date' || key === 'posted_date' ){
+                        
+                        let paramDate = moment(param);
+                        let dataDate = moment(recVal);
+                        console.log(paramDate.diff(dataDate,'days'),paramDate,dataDate)
+                        pass = paramDate.diff(dataDate,'days') == 0;
+                        
+                    }else{
+                        pass = param === recVal;
+                    }
+    
+    
+    
+                    if(!pass) return false;
+                    
                 }
-
-
-
-                if(!pass) return false;
-                
             }
 
             return true;
