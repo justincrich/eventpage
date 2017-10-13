@@ -1,0 +1,187 @@
+@import 'breakpoints';
+@import 'colors';
+@import 'mixins';
+@import 'fonts';
+
+.table_template{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.table_body{
+    max-height: calc(100vh - 170px);
+    overflow: scroll;
+    font-size: .875em;
+
+    .table_labels{
+        @extend .table_template;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        .table_title{
+            color:$accent-color-blue;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+        .event_count{
+            font-weight: bold;
+            margin-bottom:-5px;
+            
+        }
+
+    }
+
+    .table_header{
+        width:100%;
+        background-color: $accent-color-blue;
+        color: $primary-text-color-darkbkg;
+        .remove_center_border{
+            border-right-width: 0;
+            border-left-width: 0;
+        }
+
+        #A{
+            width:70%;
+            border-right-width: 0;
+            @include mq('tablet'){
+                width:30%;
+              }
+        }
+        #B{
+            width:30%;
+            @extend .remove_center_border;
+            @include mq('tablet'){
+                width:30%;
+              }
+        }
+        #C{
+            @extend .remove_center_border;
+            @include mq('tablet'){
+                width:30%;
+              }
+        }
+        #D{
+            border-left-width: 0;
+            @include mq('tablet'){
+                width:30%;
+              }
+        }
+    }
+    tbody{
+        
+        overflow: scroll;
+    }
+    td{
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .table_column_1_event_name{
+        flex-direction: column;
+        justify-content: flex-start;
+        position:relative;
+        .table_event_name_status_container{
+            display:flex;
+            flex-direction: row;
+            .table_event_name_text{
+                font-weight: bold;
+                flex-wrap: wrap;
+                color:$accent-color-gold;
+                margin-right:5px;
+            }
+        }
+        
+        .table_company_name_text{
+            font-weight: bold;
+        }
+        .table_details_container{
+            color:$secondary-text-color;
+            font-size: $size_subtle;
+            display:flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            
+            *{
+                margin-right: 4px;
+            }
+            .table_location_text{
+                display: flex;
+                flex-direction: row;
+            }
+
+        }
+
+
+        .registrants_sm{
+            margin-left:auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width:40px;
+            height:25px;
+            right:12px;
+            top:12px;
+            background:$chip-color;
+            border-radius: 20px;
+        }
+        .status_small{
+            margin-right:5px;
+        }
+        .status_small_token{
+           width:20px;
+           width:20px;
+           border-radius: 100%;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+            &.open{
+                background:$reg-open;
+                color:$primary-text-color-darkbkg;
+            }
+            &.closed{
+                background:$reg-closed;
+            }
+        }
+        
+    }
+
+    .table_column_2_event_date{
+
+        
+    }
+
+    .table_column_3_status{
+        .status_large_token{
+            display: flex;
+            font-weight: bold;
+            color: $primary-text-color-darkbkg;
+            border-radius: 10px;
+            line-height: 23px;
+            justify-content: center;
+            width:150px;
+            &.open{
+                background:$reg-open;
+            }
+            &.closed{
+                background:$reg-closed;
+            }
+        }
+    }
+
+    .table_column_4_registrants{
+        .registrants_txt_container{
+            display: flex;
+            flex-direction: row;
+            & *{
+                margin-right:5px;
+            }
+        }
+    }
+
+    
+}
+
+/*
+$reg-open: #8ED07F;
+$reg-closed: #cccccc;
+*/

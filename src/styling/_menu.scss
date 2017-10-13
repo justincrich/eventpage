@@ -1,0 +1,48 @@
+@import 'breakpoints';
+@import 'colors';
+@import 'mixins';
+@import 'fonts';
+
+.menu_body{
+    position: absolute;
+    background:$background-color;
+    display:flex;
+    width:100%;
+    @include mq('tablet'){
+        width:30%;
+        top:80px;
+        border-right: 1px solid $divider-color;
+      }
+    align-items: center;
+    padding:24px;
+    top:70px;
+    left:0;
+    z-index: 500;
+    
+
+    ul{
+        
+        width:100%;
+        
+        li{
+            display: flex;
+            align-items: flex-start;
+            font-size:$size_subheading;
+            padding: 12px 0;
+            
+            .material-icons{
+                margin-right:10px;
+            }
+        }
+        .menu_divider{
+            border-bottom: 1px solid $divider-color;
+            height:0px;
+            width:100%;
+            margin: 16px 0;
+            
+        }
+    }
+
+    
+    
+}

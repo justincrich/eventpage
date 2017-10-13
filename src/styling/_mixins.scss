@@ -1,0 +1,18 @@
+@import 'breakpoints';
+
+@mixin mq($break){
+    $value:map-get($breakpoints,$break);
+    @if $value == null{
+      @error 'Input is not valid';
+    }
+    @if $break == 'tablet'{
+      @media screen and (min-width: $value)
+      and (-webkit-min-device-pixel-ratio: 1){
+        @content;
+      }
+      }@else if $break == 'desktop'{
+        @media screen and (min-width: $value){
+          @content;
+        }
+    }
+  }

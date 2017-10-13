@@ -1,0 +1,60 @@
+@import 'breakpoints';
+@import 'colors';
+@import 'mixins';
+
+.header_template{
+    display:flex;
+    position:absolute;
+    z-index: 400;
+    background: $background-color;
+    
+}
+
+.header_center{
+    align-items: center;
+    justify-content: center;
+}
+.header_body{
+    @extend .header_template;
+    @extend .header_center;
+    width:100%;
+    border-bottom: 4px solid $accent-color-blue;
+    padding: 12px 9px;
+    height:80px;
+    color:$primary-text-color-lightbkg;
+    flex-direction: row;
+    
+    top:0;
+    left:0;
+
+    .header_img_container{
+        @extend .header_template;
+        @extend .header_center;
+        overflow:none;
+        left:12px;
+        margin-right:10px;
+        img{
+            position:'relative';
+            flex:1;
+            width:110px;
+            padding: 0 2px;
+        }
+        i{
+            cursor: pointer;
+        }
+    }
+
+    .header_title{
+        color:$accent-color-blue;
+    }
+
+    .header_action_bar{
+        @extend .header_template;
+        cursor: pointer;
+        right:12px;
+        *{
+            padding:10px;
+        }
+    }    
+
+}

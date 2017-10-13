@@ -1,0 +1,23 @@
+@import 'colors';
+@import 'fonts';
+
+.App{
+    flex:1;
+    
+    
+}
+
+body{
+    color:$primary-text-color-lightbkg;
+    font-family: $type_default;
+    max-height: 100vh;
+    
+    
+}
+
+ul{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
